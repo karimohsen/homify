@@ -31,7 +31,7 @@ public class ContractServices {
 			return "{\"revenues\":" + revenues + "}";
 		} catch (Exception e) {
 			Response.status(Status.BAD_REQUEST).build();
-			return "{\"response\":\"false\"}";
+			return "{\"response\":\"wrong input\"}";
 		}
 	}
 
@@ -40,11 +40,15 @@ public class ContractServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getRevenuesByType(String typeJson) {
 		try {
+			if (typeJson == null) {
+				Response.status(Status.BAD_REQUEST).build();
+				return "{\"response\":\"type error\"}";
+			}
 			JSONObject obj = new JSONObject(typeJson);
 			String type = obj.getString("type");
-			if(type == null){
+			if (type == null || type.equals("")) {
 				Response.status(Status.BAD_REQUEST).build();
-				return "{\"response\":\"false\"}";
+				return "{\"response\":\"type error\"}";
 			}
 			double revenues = 0;
 			for (int i = 0; i < contractsList.size(); i++) {

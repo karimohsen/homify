@@ -42,7 +42,7 @@ public class CustomerServices {
 
 		} catch (Exception e) {
 			Response.status(Status.BAD_REQUEST).build();
-			return "{\"response\":\"false\"}";
+			return "{\"response\":\"bad input\"}";
 		}
 	}
 
@@ -80,8 +80,8 @@ public class CustomerServices {
 			Response.status(Status.CREATED).build();
 			return "{\"response\":\"DONE\"}";
 		} catch (Exception e) {
-			Response.status(Status.CREATED).build();
-			return "{\"response\":\"DONE\"}";
+			Response.status(Status.BAD_REQUEST).build();
+			return "{\"response\":\"bad input\"}";
 		}
 	}
 
