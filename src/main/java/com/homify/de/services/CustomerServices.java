@@ -30,13 +30,13 @@ public class CustomerServices {
 	public String addNewCustomer(String customerJson) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			CustomerDao customerDao = mapper.readValue(customerJson, CustomerDao.class);
+			CustomerDao customerDao = mapper.readValue(customerJson, CustomerDao.class);//map json to customerDao
 			List<Contract> contracts = new ArrayList<Contract>();
 			Customer customer = new Customer();
 			customer.setContracts(contracts);
 			customer.setFullName(customerDao.getFullName());
 			customer.setId(customerDao.getId());
-			customersList.add(customer);
+			customersList.add(customer); // add the customer to customers list with empty contract list
 			Response.status(Status.CREATED).build();
 			return "{\"response\":\"DONE\"}";
 
@@ -64,7 +64,7 @@ public class CustomerServices {
 				}
 			}
 			if (!found) {
-				Response.status(Status.NOT_FOUND).build();
+				Response.status(Status.NOT_FOUND).build(); //if the contract with non existing customer id
 				return "{\"response\":\"there is no such contact\"}";
 			}
 			List<Contract> contracts = customer.getContracts();
@@ -75,8 +75,8 @@ public class CustomerServices {
 			contract.setStartDate(contractDao.getStartDate());
 			contract.setType(contractDao.getType());
 			contracts.add(contract);
-			contractsList.add(contract);
-			customer.setContracts(contracts);
+			contractsList.add(contract);//add contract to contracts list
+			customer.setContracts(contracts);//add contract to customer's contracts list
 			Response.status(Status.CREATED).build();
 			return "{\"response\":\"DONE\"}";
 		} catch (Exception e) {
